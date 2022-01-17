@@ -53,11 +53,20 @@ class TableFooterView: UIView {
     
     private func setup(strings: [String]) {
         addSubview(contentStackView)
+        let leading = contentStackView.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor, constant: 16)
+        leading.priority = UILayoutPriority(999)
+        let top = contentStackView.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor, constant: 8)
+        top.priority = UILayoutPriority(999)
+        let trailing = layoutMarginsGuide.trailingAnchor.constraint(equalTo: contentStackView.trailingAnchor, constant: 16)
+        trailing.priority = UILayoutPriority(999)
+        let bottom = layoutMarginsGuide.bottomAnchor.constraint(equalTo: contentStackView.bottomAnchor, constant: 8)
+        bottom.priority = UILayoutPriority(999)
+        
         NSLayoutConstraint.activate([
-            contentStackView.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor, constant: 16),
-            contentStackView.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor, constant: 8),
-            layoutMarginsGuide.trailingAnchor.constraint(equalTo: contentStackView.trailingAnchor, constant: 16),
-            layoutMarginsGuide.bottomAnchor.constraint(equalTo: contentStackView.bottomAnchor, constant: 8)
+            leading,
+            top,
+            trailing,
+            bottom
         ])
         
         strings.forEach { string in
@@ -84,9 +93,10 @@ class TableFooterView: UIView {
                     element.isHidden = false
                 }
             }
-            self.lessOrMoreButtonCallback?()
+            
             self.contentStackView.layoutIfNeeded()
             self.lessOrMoreButton.setTitle(self.lessOrMoreButton.currentTitle == "Less" ? "More": "Less", for: .normal)
+            self.lessOrMoreButtonCallback?()
             
         } completion: { complete in
             
@@ -138,9 +148,9 @@ class TableFooterView: UIView {
                 }
             }
             
-            self.hideButtonCallback?()
             self.contentStackView.layoutIfNeeded()
             self.hideButton.setTitle(self.hideButton.currentTitle == "Hide" ? "Show": "Hide", for: .normal)
+            self.hideButtonCallback?()
             
         } completion: { complete in
             
